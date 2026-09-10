@@ -10,13 +10,13 @@ O sistema permite cadastrar usuários, profissionais e horários, além de criar
 
 - [x] Node.js
 - [x] Express
-- [ ] Sequelize
-- [ ] MySQL
-- [ ] JWT
-- [ ] bcrypt
-- [ ] Zod
+- [x] Sequelize
+- [x] MySQL
+- [x] JWT
+- [x] bcrypt
+- [x] Zod
 - [ ] Express Rate Limit
-- [ ] dotenv
+- [x] dotenv
 
 ---
 
