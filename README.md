@@ -15,7 +15,7 @@ O sistema permite cadastrar usuários, profissionais e horários, além de criar
 - [x] JWT
 - [x] bcrypt
 - [x] Zod
-- [ ] Express Rate Limit
+- [x] Express Rate Limit
 - [x] dotenv
 
 ---
