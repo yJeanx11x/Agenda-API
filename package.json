@@ -4,7 +4,7 @@
   "description": "API REST para gerenciamento de agendamentos e consultas.",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch src/app/server.js"
+    "dev": "node --watch src/models/User.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,10 @@
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.24.4",
     "rate-limit-redis": "^6.0.1",
-    "sequelize": "^3.30.0",
+    "sequelize": "^6.37.8",
     "zod": "^4.6.1"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true
   }
 }

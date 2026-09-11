@@ -1,5 +1,9 @@
+
 const db = require("../config/database");
+const proficional = require("../models/Professional");
+
 const { DataTypes } = require("sequelize");
+
 const User = db.define("User", {
   nome: {
     type: DataTypes.STRING,
@@ -28,10 +32,13 @@ const User = db.define("User", {
 async function criaTabela() {
   try {
     await User.sync({ force: false });
-    console.log("Tabela Criada com Sucesso!");
+    await proficional.sync({ force: false });
+    console.log("Tabelas Criada com Sucesso!");
   } catch (error) {
     console.log("tabela erro", error);
   }
 }
 
 criaTabela();
+
+module.exports = { User };
