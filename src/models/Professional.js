@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
-const db=require('../config/database')
+const db = require("../config/database");
+
 const Professional = db.define("Professional", {
   nome: {
     type: DataTypes.STRING,
