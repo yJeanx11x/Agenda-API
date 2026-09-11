@@ -14,6 +14,15 @@ const User = db.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  role: {
+    type: db.Sequelize.ENUM("ADMIN", "USER"),
+    allowNull: false,
+    defaultValue: "USER",
+  },
+  token: {
+    type: db.Sequelize.TEXT,
+    allowNull: true,
+  },
 });
 
 async function criaTabela() {
