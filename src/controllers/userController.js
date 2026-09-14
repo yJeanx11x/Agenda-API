@@ -1,16 +1,18 @@
 const { User } = require("../models/user");
-
-async function register(req, res) {
+const bcrypt = require("bcrypt");
+async function register(req, res, next) {
   const { nome, email, password } = req.body;
+  const senhaHas = await bcrypt.hash(password, 12);
+  
   try {
     User.create({
-      nome,
-      email,
-      password,
+      nome:nome,
+      email:email,
+      password: senhaHas,
     });
     return res.status(201).json({ msg: "Sua conta foi criada com sucesso! " });
   } catch (error) {
-    console.log("Deu Erro aqui ");
+    next(error);
   }
 }
 
