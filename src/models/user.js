@@ -1,6 +1,6 @@
-
 const db = require("../config/database");
-const proficional = require("../models/Professional");
+const proficional = require("./Professional");
+const agendamento = require("./Appointment");
 
 const { DataTypes } = require("sequelize");
 
@@ -33,6 +33,7 @@ async function criaTabela() {
   try {
     await User.sync({ force: false });
     await proficional.sync({ force: false });
+    await agendamento.sync({ force: false });
     console.log("Tabelas Criada com Sucesso!");
   } catch (error) {
     console.log("tabela erro", error);

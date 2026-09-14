@@ -4,7 +4,7 @@
   "description": "API REST para gerenciamento de agendamentos e consultas.",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch src/models/User.js"
+    "dev": "node --watch src/app/server.js"
   },
   "keywords": [],
   "author": "",

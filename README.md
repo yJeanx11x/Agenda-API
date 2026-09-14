@@ -53,13 +53,6 @@ src
 └── routes
     └── routes.js
 
-👨‍💼 Profissional
-
-Profissional
- id
- nome
- especialidade
- telefone
 
 📅 Agendamento
 Appointment
