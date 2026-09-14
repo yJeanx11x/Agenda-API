@@ -1,13 +1,15 @@
 const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
+const z = require("../schemas/validacaoUser");
+
 async function register(req, res, next) {
-  const { nome, email, password } = req.body;
-  const senhaHas = await bcrypt.hash(password, 12);
-  
+  const validacao = z.safeParse(req.body);
+  const senhaHas = await bcrypt.hash(validacao.data.password, 12);
+
   try {
     User.create({
-      nome:nome,
-      email:email,
+      nome: validacao.data.nome,
+      email: validacao.data.email,
       password: senhaHas,
     });
     return res.status(201).json({ msg: "Sua conta foi criada com sucesso! " });
