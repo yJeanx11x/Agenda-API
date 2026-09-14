@@ -1,7 +1,8 @@
+require("dotenv").config();
 const { User } = require("../models/user");
 const bcrypt = require("bcrypt");
 const z = require("../schemas/validacaoUser");
-
+const jwt = require("jsonwebtoken");
 async function register(req, res, next) {
   const validacao = z.safeParse(req.body);
   const senhaHas = await bcrypt.hash(validacao.data.password, 12);
@@ -28,15 +29,25 @@ async function login(req, res, next) {
       return res.status(401).json({ msg: "Email não cadastrado " });
     }
 
-    const verificarSenha = await bcrypt.compare(password,user.password);
+    const verificarSenha = await bcrypt.compare(password, user.password);
     if (!verificarSenha) {
       return res.status(401).json({ msg: "Senha Invalida" });
     }
-
-
-    return res.status(201).json({ msg: "login com sucesso !" });
+    const secret = process.env.SECRET;
+    const token = jwt.sign(
+      {
+        id: user.id,
+      },
+      secret,
+      { expiresIn: "1h" },
+    );
+user.token=token
+await user.save()
+    return res.status(201).json({ msg: "login com sucesso !", token: token });
   } catch (error) {
     next(error);
   }
 }
+
+
 module.exports = { register, login };
