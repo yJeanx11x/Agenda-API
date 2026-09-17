@@ -8,6 +8,7 @@ const jwt = require("../config/jwt");
 appRoutes.post("/register", userControllers.register);
 appRoutes.post("/login", userControllers.login);
 appRoutes.get("/user", jwt.verifyToken,userControllers.userPerfil);
+appRoutes.delete("/user", jwt.verifyToken,userControllers.deletePerfil);
 
 
 
