@@ -29,10 +29,7 @@ async function login(req, res, next) {
       return res.status(401).json({ msg: "Email não cadastrado " });
     }
 
-    const verificarSenha = await bcrypt.compare(
-      password,
-      user.password,
-    );
+    const verificarSenha = await bcrypt.compare(password, user.password);
     if (!verificarSenha) {
       return res.status(401).json({ msg: "Senha Invalida" });
     }
@@ -52,4 +49,17 @@ async function login(req, res, next) {
   }
 }
 
-module.exports = { register, login };
+async function userPerfil(req, res, next) {
+  try {
+    const user = await User.findOne({
+      where: req.user.id,
+      attributes: ["id", "nome", "email"]
+    });
+
+    return res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { register, login, userPerfil };
