@@ -1,10 +1,10 @@
-const profissional = require('../models/Professional')
+const Profissional = require('../models/Professional')
 
 async function criarProfissional(req, res, next) {
   try {
     const { nome, especialidade, telefone } = req.body;
 
-    await profissional.create({
+    await Profissional.create({
       nome,
       especialidade,
       telefone,
@@ -16,4 +16,18 @@ async function criarProfissional(req, res, next) {
   }
 }
 
-module.exports = { criarProfissional };
+async function profissional(req,res,next) {
+    
+    try {
+        const profissional=await Profissional.findAll({attributes:["id","nome","especialidade","telefone"]})
+if(!profissional.length ){
+    return res.status(401).json({msg:'Nenhum Prodissional Cadastrado'})
+}
+        return res.status(200).json(profissional)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+module.exports = { criarProfissional,profissional };
