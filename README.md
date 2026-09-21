@@ -84,24 +84,30 @@ Appointment
  ├── belongsTo ──> User
  │
  └── belongsTo ──> Professional
+
 🔐 Autenticação
- Criar conta
- Login
- Gerar JWT
- Middleware de autenticação
- bcrypt para senha
+
+[x] Criar conta
+[x] Login
+[x] Gerar JWT
+[x] Middleware de autenticação
+[x] bcrypt para senha
+
 👤 Usuários
- Criar usuário
- Fazer login
- Visualizar perfil
- Atualizar perfil
- Excluir conta
+
+[x] Criar usuário
+[x] Fazer login
+[x] Visualizar perfil
+[x] Excluir conta
+
 👨‍💼 Profissionais
- Cadastrar profissional
- Listar profissionais
- Buscar profissional por ID
- Atualizar profissional
- Excluir profissional
+
+[ ] Cadastrar profissional
+[ ] Listar profissionais
+[ ] Buscar profissional por ID
+[ ] Atualizar profissional
+[ ] Excluir profissional
+
 📅 Agendamentos
  Criar agendamento
  Listar meus agendamentos
