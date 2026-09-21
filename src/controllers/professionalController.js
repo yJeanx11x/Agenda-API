@@ -35,13 +35,33 @@ async function profissional(req, res, next) {
 async function profissionalId(req, res, next) {
   const { id } = req.params;
   try {
-    const profissional = await Profissional.findOne({ where: { id },attributes:["id","nome","especialidade","telefone"] });
-    if(!profissional){
-        return res.status(401).json({msg:"Nenhum Profissional Encontrado"})
+    const profissional = await Profissional.findOne({
+      where: { id },
+      attributes: ["id", "nome", "especialidade", "telefone"],
+    });
+    if (!profissional) {
+      return res.status(401).json({ msg: "Nenhum Profissional Encontrado" });
     }
     return res.status(200).json(profissional);
   } catch (error) {
     next(error);
   }
 }
-module.exports = { criarProfissional, profissional,profissionalId };
+
+async function deletaProfissional(req, res, next) {
+  const { id } = req.params;
+  try {
+    const profissional = await Profissional.findOne({ where: { id } });
+
+    if(!profissional){
+        return res.status(401).json({msg:"Profissional não encontrado!"})
+    }
+
+    await profissional.destroy()
+return res.status(200).json({msg:"Profissional deletado com sucesso !"})
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { criarProfissional, profissional, profissionalId,deletaProfissional };
