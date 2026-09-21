@@ -15,6 +15,8 @@ appRoutes.delete("/user", jwt.verifyToken,userControllers.deletePerfil);
 
 appRoutes.post("/professionals", proficional.criarProfissional)
 appRoutes.get("/professionals", proficional.profissional)
+appRoutes.get("/professionals", proficional.profissional)
 appRoutes.get("/professionals/:id", proficional.profissionalId)
+appRoutes.delete("/professionals/:id", proficional.deletaProfissional)
 
 module.exports = appRoutes;
