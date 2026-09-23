@@ -1,8 +1,9 @@
 const db = require("../config/database");
-const proficional = require("./Professional");
+const profissional = require("./Professional");
 const agendamento = require("./Appointment");
 
 const { DataTypes } = require("sequelize");
+
 
 const User = db.define("User", {
   nome: {
@@ -29,10 +30,26 @@ const User = db.define("User", {
   },
 });
 
+User.hasMany(agendamento, {
+  foreignKey: "userId",
+});
+
+profissional.hasMany(agendamento, {
+  foreignKey: "profissionalId",
+});
+
+agendamento.belongsTo(User, {
+  foreignKey: "userId",
+});
+
+agendamento.belongsTo(profissional, {
+  foreignKey: "profissionalId",
+});
+
 async function criaTabela() {
   try {
     await User.sync({ force: false });
-    await proficional.sync({ force: false });
+    await profissional.sync({ force: false });
     await agendamento.sync({ force: false });
     console.log("Tabelas Criada com Sucesso!");
   } catch (error) {
