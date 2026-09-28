@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { User } = require("../models/user");
+const User  = require("../models/User");
 const bcrypt = require("bcrypt");
 const z = require("../schemas/validacaoUser");
 const jwt = require("jsonwebtoken");
@@ -9,7 +9,7 @@ async function register(req, res, next) {
   const senhaHas = await bcrypt.hash(validacao.data.password, 12);
 
   try {
-    User.create({
+   await User.create({
       nome: validacao.data.nome,
       email: validacao.data.email,
       password: senhaHas,
@@ -26,24 +26,25 @@ async function login(req, res, next) {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(401).json({ msg: "Email não cadastrado " });
+      return res.status(401).json({ msg: "Email ou senha inválidos " });
     }
 
     const verificarSenha = await bcrypt.compare(password, user.password);
     if (!verificarSenha) {
-      return res.status(401).json({ msg: "Senha Invalida" });
+      return res.status(401).json({ msg: "Email ou senha inválidos" });
     }
     const secret = process.env.SECRET;
     const token = jwt.sign(
       {
-        id: user.id,
+        id: user._id,
+        role: user.role,
       },
       secret,
       { expiresIn: "1h" },
     );
     user.token = token;
     await user.save();
-    return res.status(201).json({ msg: "login com sucesso !", token: token });
+    return res.status(200).json({ msg: "login com sucesso !", token: token });
   } catch (error) {
     next(error);
   }
@@ -64,7 +65,7 @@ async function userPerfil(req, res, next) {
 
 async function deletePerfil(req, res, next) {
   try {
-    const user = await User.findOne({ where: req.user.id  });
+    const user = await User.findOne({ where: req.user.id });
     if (!user) {
       return res.status(401).json({ msg: "Usuario não Listado" });
     }
@@ -75,4 +76,4 @@ async function deletePerfil(req, res, next) {
   }
 }
 
-module.exports = { register, login, userPerfil,deletePerfil };
+module.exports = { register, login, userPerfil, deletePerfil };
