@@ -33,15 +33,5 @@ const Appointment = db.define("Appointment", {
   },
 });
 
-async function iniciar() {
-  try {
-     await Appointment.sync({ force: false });
-      console.log("Tabelas Appointment Criada com Sucesso!");
 
-  } catch (error) {
-    console.error("tabela Appointment deu erro",error)
-  }
-}
-
-iniciar()
 module.exports = Appointment;
