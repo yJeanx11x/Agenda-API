@@ -19,5 +19,6 @@ appRoutes.get("/professionals/:id", proficional.profissionalId);
 appRoutes.delete("/professionals/:id", proficional.deletaProfissional);
 
 appRoutes.post("/appointments", jwt.verifyToken, agendar.agendar);
+appRoutes.get("/appointments", jwt.verifyToken, agendar.MeuAgendamento);
 
 module.exports = appRoutes;
