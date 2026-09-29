@@ -1,7 +1,7 @@
 const db = require("../config/database");
 const { DataTypes } = require("sequelize");
 
-const professionals = db.define("Professional", {
+const Professional = db.define("Professional", {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -18,4 +18,5 @@ const professionals = db.define("Professional", {
   },
 });
 
-module.exports = professionals;
+
+module.exports = Professional;
