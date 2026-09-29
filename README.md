@@ -102,11 +102,10 @@ Appointment
 
 👨‍💼 Profissionais
 
-[ ] Cadastrar profissional
-[ ] Listar profissionais
-[ ] Buscar profissional por ID
-[ ] Atualizar profissional
-[ ] Excluir profissional
+[x] Cadastrar profissional
+[x] Listar profissionais
+[x] Buscar profissional por ID
+[x] Excluir profissional
 
 📅 Agendamentos
  Criar agendamento
@@ -114,9 +113,11 @@ Appointment
  Buscar agendamento por ID
  Cancelar agendamento
  Concluir agendamento
+
 🚨 Regras de Negócio
- Usuário precisa estar autenticado
- Usuário só pode visualizar seus próprios agendamentos
+
+[x] Usuário precisa estar autenticado
+[ ] Usuário só pode visualizar seus próprios agendamentos
  Não permitir dois agendamentos no mesmo horário
  Não permitir agendamento em horário passado
  Não permitir agendamento em horário já ocupado
@@ -124,6 +125,7 @@ Appointment
  Usuário só pode cancelar seus próprios agendamentos
  Agendamento concluído não pode ser cancelado
  Data e horário devem ser obrigatórios
+
 🔎 Consultas
  Listar profissionais
  Buscar por especialidade
