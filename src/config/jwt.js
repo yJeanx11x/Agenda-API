@@ -1,6 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const  User  = require("../models/UserModels");
+const  User  = require("../models/user");
 
 async function verifyToken(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -13,7 +13,7 @@ async function verifyToken(req, res, next) {
   try {
     const secret = process.env.SECRET;
     const decoded = jwt.verify(token, secret);
-    const user = await User.findByPk(decoded.id);
+    const user = await User.findOne(decoded.id);
 
     if (!user) {
       return res.status(401).json({ msg: "Usuário não encontrado" });
