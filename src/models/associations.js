@@ -1,6 +1,6 @@
-const Professional = require("./Professional");
-const Appointment = require("./Appointment");
-const User = require("../models/user");
+const User = require("./user");
+const Professional = require("../models/Professional");
+const Appointment = require("../models/appointment");
 
 User.hasMany(Appointment, {
   foreignKey: "UserId",
@@ -22,23 +22,17 @@ Appointment.belongsTo(Professional, {
   as: "profissional",
 });
 
-
-
 async function iniciar() {
   try {
-
-    console.log("Banco conectado!");
-
-    await User.sync({ force: true });
-    await Professional.sync({ force: true });
-    await Appointment.sync({ force: true });
+    await User.sync({ force: false });
+    await Professional.sync({ force: false });
+    await Appointment.sync({ force: false });
 
     console.log("Tabelas criadas com sucesso!");
-
   } catch (error) {
-    console.log("Erro ao conectar ao banco:", error);
+    console.error("Erro ao criar tabelas:", error);
   }
 }
 
-iniciar();
 
+module.exports = iniciar;
