@@ -1,19 +1,23 @@
 const User = require("../models/user");
 const Professional = require("../models/Professional");
 const Agenda = require("../models/appointment");
-const id = require("zod/v4/locales/id.cjs");
+
 
 async function agendar(req, res, next) {
   const { ProfessionalId, data, horario } = req.body;
   try {
     const user = await User.findOne({ where: req.user.id });
     const profissional = await Professional.findOne({where:ProfessionalId});
-
+    const agenda=await Agenda.findOne({where:req.user.id})
    
     if (!profissional) {
       return res.status(401).json({ msg: "Profissional Indisponivel" });
     }
-    
+
+    if(agenda.horario == horario ){
+       return res.status(401).json({ msg: "Horario Indisponivel" });
+    }
+  
     await Agenda.create({
         data,
         horario,
@@ -21,8 +25,8 @@ async function agendar(req, res, next) {
         ProfessionalId,
       });
 
-      return res.status(201).json({ msg: "Agendamento com sucesso!",Horario:horario,Data:data,Profissional:profissional.nome,Tipo:profissional.especialidade });
-   
+    
+    return res.status(201).json({ msg: "Agendamento com sucesso!",Horario:horario,Data:data,Profissional:profissional.nome,Tipo:profissional.especialidade });
   } catch (error) {
     next(error);
   }
@@ -33,17 +37,13 @@ async function MeuAgendamento(req, res, next) {
     const userAgenda = await Agenda.findAll({
       UserId: req.user.id,
       attributes: ["data", "horario", "status"],
+      
     });
-    const professional = await Professional.findOne({
-      where: userAgenda.ProficionalID,
-    });
-
     if (!userAgenda) {
       return res.status(401).json({ msg: "Você não tem Nunhum agendamento" });
     }
-    return res
-      .status(200)
-      .json({ msg: "Você Tem agendado", Meu_Agendamento: userAgenda });
+    return res.status(200).json({ msg: "Você Tem agendado",Meu_Agendamento:userAgenda,});
+
   } catch (error) {
     next(error);
   }

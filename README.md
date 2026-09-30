@@ -117,14 +117,14 @@ Appointment
 🚨 Regras de Negócio
 
 [x] Usuário precisa estar autenticado
-[ ] Usuário só pode visualizar seus próprios agendamentos
- Não permitir dois agendamentos no mesmo horário
- Não permitir agendamento em horário passado
- Não permitir agendamento em horário já ocupado
- Não permitir agendamento em consulta cancelada
- Usuário só pode cancelar seus próprios agendamentos
- Agendamento concluído não pode ser cancelado
- Data e horário devem ser obrigatórios
+[x] Usuário só pode visualizar seus próprios agendamentos
+[x] Não permitir dois agendamentos no mesmo horário
+[ ] Não permitir agendamento em horário passado
+[ ] Não permitir agendamento em horário já ocupado
+[ ] Não permitir agendamento em consulta cancelada
+[ ] Usuário só pode cancelar seus próprios agendamentos
+[ ] Agendamento concluído não pode ser cancelado
+[ ] Data e horário devem ser obrigatórios
 
 🔎 Consultas
  Listar profissionais
@@ -154,11 +154,13 @@ Appointment
  PUT /professionals/:id
  DELETE /professionals/:id
 📅 Agendamentos
+
  POST /appointments
  GET /appointments
  GET /appointments/:id
  PUT /appointments/:id/cancel
  PUT /appointments/:id/complete
+
 🧪 Testes
  Testar cadastro no Postman
  Testar login no Postman
