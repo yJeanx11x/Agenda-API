@@ -68,29 +68,71 @@ async function buscarAgendamento(req, res, next) {
   }
 }
 
+// cancelar agendamento
 async function cancelarAgendamento(req, res, next) {
   const { id } = req.params;
   try {
     const agendaCancelar = await Agenda.findOne({ where: { id } });
 
-    if(agendaCancelar.status === "CANCELADO"){
-
-      return res.status(401).json({msg:"O agendamento do cliente já foi cancelado."})
+    if (agendaCancelar.status === "CANCELADO") {
+      return res
+        .status(401)
+        .json({ msg: "O agendamento do cliente já foi cancelado." });
     }
-    if(!agendaCancelar){
-      return res.status(401).json({msg:"Agendamento Não encontrado!"})
+
+    if (!agendaCancelar) {
+      return res.status(401).json({ msg: "Agendamento Não encontrado!" });
     }
-   await agendaCancelar.update({
-    status:'CANCELADO'
-   })
 
-await Agenda.salve()
+    if(agendaCancelar.status === "CONCLUIDO"){
+     return res.status(401).json({msg:"Não é possível cancelar o serviço, pois ele já foi concluído."})
+   }
+    await agendaCancelar.update({
+      status: "CANCELADO",
+    });
 
-   return res.status(200).json({msg:"Agendamento cancelado com sucesso."})
+    await Agenda.save();
+
+    return res.status(200).json({ msg: "Agendamento cancelado com sucesso." });
   } catch (error) {
     next(error);
   }
 }
 
+// CONCLUIDO
+async function concluirAgendamento(req, res, next) {
+  const { id } = req.params;
+  try {
+    const agendaCancelar = await Agenda.findOne({ where: { id } });
 
-module.exports = { agendar, MeuAgendamento, buscarAgendamento,cancelarAgendamento };
+    if (!agendaCancelar) {
+      return res.status(401).json({ msg: "Agendamento Não encontrado!" });
+    }
+
+    if (agendaCancelar.status === "CONCLUIDO") {
+      return res.status(401).json({ msg: "O agendamento do cliente já foi CONCLUIDO." });
+    }
+    
+    if(agendaCancelar.status === "CANCELADO"){
+      return res.status(401).json({msg:"Não é possível concluir o serviço: o agendamento foi cancelado."})
+    }
+    
+    await agendaCancelar.update({
+      status: "CONCLUIDO",
+    });
+
+    await Agenda.save();
+
+    return res.status(200).json({ msg: "Agendamento CONCLUIDO com sucesso." });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = {
+  agendar,
+  MeuAgendamento,
+  buscarAgendamento,
+  cancelarAgendamento,
+  concluirAgendamento,
+};
