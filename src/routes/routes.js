@@ -4,24 +4,26 @@ const appRoutes = express.Router();
 
 const userControllers = require("../controllers/userController");
 const jwt = require("../config/jwt");
-const proficional = require("../controllers/professionalController");
+const profissional = require("../controllers/professionalController");
 const agendar = require("../controllers/appointmentController");
+const adminUser = require("../middlewares/adminUser");
+
 
 appRoutes.post("/register", userControllers.register);
 appRoutes.post("/login", userControllers.login);
 appRoutes.get("/user", jwt.verifyToken, userControllers.userPerfil);
 appRoutes.delete("/user", jwt.verifyToken, userControllers.deletePerfil);
 
-appRoutes.post("/professionals", proficional.criarProfissional);
-appRoutes.get("/professionals", proficional.profissional);
-appRoutes.get("/professionals", proficional.profissional);
-appRoutes.get("/professionals/:id", proficional.profissionalId);
-appRoutes.delete("/professionals/:id", proficional.deletaProfissional);
+appRoutes.post("/professionals",jwt.verifyToken,adminUser ,profissional.criarProfissional);
+appRoutes.get("/professionals", profissional.profissional);
+appRoutes.get("/professionals", profissional.profissional);
+appRoutes.get("/professionals/:id", profissional.profissionalId);
+appRoutes.delete("/professionals/:id",jwt.verifyToken,adminUser,profissional.deletaProfissional);
 
 appRoutes.post("/appointments", jwt.verifyToken, agendar.agendar);
 appRoutes.get("/appointments", jwt.verifyToken, agendar.MeuAgendamento);
 appRoutes.get("/appointments/:id",agendar.buscarAgendamento);
-appRoutes.patch("/appointments/:id/cancel",agendar.cancelarAgendamento);
-appRoutes.patch("/appointments/:id/complete",agendar.concluirAgendamento);
+appRoutes.patch("/appointments/:id/cancel",jwt.verifyToken,adminUser,agendar.cancelarAgendamento);
+appRoutes.patch("/appointments/:id/complete",jwt.verifyToken,adminUser,agendar.concluirAgendamento);
 
 module.exports = appRoutes;
