@@ -108,11 +108,11 @@ Appointment
 [x] Excluir profissional
 
 📅 Agendamentos
- Criar agendamento
- Listar meus agendamentos
- Buscar agendamento por ID
- Cancelar agendamento
- Concluir agendamento
+[x] Criar agendamento
+[x] Listar meus agendamentos
+[x] Buscar agendamento por ID
+[x] Cancelar agendamento
+[ ] Concluir agendamento
 
 🚨 Regras de Negócio
 
