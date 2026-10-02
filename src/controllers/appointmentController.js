@@ -8,10 +8,7 @@ async function agendar(req, res, next) {
     const user = await User.findOne({ where: req.user.id });
     const profissional = await Professional.findOne({ where: ProfessionalId });
     const agenda = await Agenda.findOne({ where: req.user.id });
-
-    if (!profissional) {
-      return res.status(401).json({ msg: "Profissional Indisponivel" });
-    }
+    
 
     if (agenda.horario == horario) {
       return res.status(401).json({ msg: "Horario Indisponivel" });
@@ -38,16 +35,13 @@ async function agendar(req, res, next) {
 
 async function MeuAgendamento(req, res, next) {
   try {
-    const userAgenda = await Agenda.findAll({
-      UserId: req.user.id,
-      attributes: ["data", "horario", "status"],
-    });
+    const userAgenda = await Agenda.findAll({where:{ status:"AGENDADO"},UserId: req.user.id, attributes: ["data", "horario", "status","ProfessionalId"]});
+    
     if (!userAgenda) {
       return res.status(401).json({ msg: "Você não tem Nunhum agendamento" });
     }
-    return res
-      .status(200)
-      .json({ msg: "Você Tem agendado", Meu_Agendamento: userAgenda });
+    
+    return res.status(200).json({ msg: "Você Tem agendado", Meu_Agendamento: userAgenda });
   } catch (error) {
     next(error);
   }
