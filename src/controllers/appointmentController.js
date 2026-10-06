@@ -8,12 +8,8 @@ async function agendar(req, res, next) {
     const user = await User.findOne({ where: req.user.id });
     const profissional = await Professional.findOne({ where: ProfessionalId });
     const agenda = await Agenda.findOne({ where: req.user.id });
-    
 
-    if (agenda.horario == horario) {
-      return res.status(401).json({ msg: "Horario Indisponivel" });
-    }
-
+ 
     await Agenda.create({
       data,
       horario,
@@ -35,13 +31,13 @@ async function agendar(req, res, next) {
 
 async function MeuAgendamento(req, res, next) {
   try {
-    const userAgenda = await Agenda.findAll({where:{ status:"AGENDADO"},UserId: req.user.id, attributes: ["data", "horario", "status","ProfessionalId"]});
     
-    if (!userAgenda) {
+
+    const userAgenda = await Agenda.findAll({where:{UserId:req.user.id, status:"AGENDADO" },attributes: { exclude: ['createdAt','updatedAt'] }});
+    if (!userAgenda.length  ) {
       return res.status(401).json({ msg: "Você não tem Nunhum agendamento" });
     }
-    
-    return res.status(200).json({ msg: "Você Tem agendado", Meu_Agendamento: userAgenda });
+    return res.status(200).json({Meu_Agendamento: userAgenda });
   } catch (error) {
     next(error);
   }
@@ -57,6 +53,15 @@ async function buscarAgendamento(req, res, next) {
       },
     });
     return res.status(200).json(agendamento);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function cancelarMeuAgendamento(req, res, next) {
+  const cancelarAgendado = await Agenda.findAll({ where: req.user.id });
+  try {
+    return res.status(200).json(cancelarAgendado);
   } catch (error) {
     next(error);
   }
@@ -78,9 +83,13 @@ async function cancelarAgendamento(req, res, next) {
       return res.status(401).json({ msg: "Agendamento Não encontrado!" });
     }
 
-    if(agendaCancelar.status === "CONCLUIDO"){
-     return res.status(401).json({msg:"Não é possível cancelar o serviço, pois ele já foi concluído."})
-   }
+    if (agendaCancelar.status === "CONCLUIDO") {
+      return res
+        .status(401)
+        .json({
+          msg: "Não é possível cancelar o serviço, pois ele já foi concluído.",
+        });
+    }
     await agendaCancelar.update({
       status: "CANCELADO",
     });
@@ -104,13 +113,19 @@ async function concluirAgendamento(req, res, next) {
     }
 
     if (agendaCancelar.status === "CONCLUIDO") {
-      return res.status(401).json({ msg: "O agendamento do cliente já foi CONCLUIDO." });
+      return res
+        .status(401)
+        .json({ msg: "O agendamento do cliente já foi CONCLUIDO." });
     }
-    
-    if(agendaCancelar.status === "CANCELADO"){
-      return res.status(401).json({msg:"Não é possível concluir o serviço: o agendamento foi cancelado."})
+
+    if (agendaCancelar.status === "CANCELADO") {
+      return res
+        .status(401)
+        .json({
+          msg: "Não é possível concluir o serviço: o agendamento foi cancelado.",
+        });
     }
-    
+
     await agendaCancelar.update({
       status: "CONCLUIDO",
     });
