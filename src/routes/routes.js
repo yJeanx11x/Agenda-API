@@ -14,7 +14,8 @@ appRoutes.post("/login", userControllers.login);
 appRoutes.get("/user", jwt.verifyToken, userControllers.userPerfil);
 appRoutes.delete("/user", jwt.verifyToken, userControllers.deletePerfil);
 
-appRoutes.post("/professionals",jwt.verifyToken,adminUser ,profissional.criarProfissional);
+
+appRoutes.post("/professionals",jwt.verifyToken,adminUser,profissional.criarProfissional);
 appRoutes.get("/professionals", profissional.profissional);
 appRoutes.get("/professionals", profissional.profissional);
 appRoutes.get("/professionals/:id", profissional.profissionalId);
@@ -25,5 +26,6 @@ appRoutes.get("/appointments", jwt.verifyToken, agendar.MeuAgendamento);
 appRoutes.get("/appointments/:id",agendar.buscarAgendamento);
 appRoutes.patch("/appointments/:id/cancel",jwt.verifyToken,adminUser,agendar.cancelarAgendamento);
 appRoutes.patch("/appointments/:id/complete",jwt.verifyToken,adminUser,agendar.concluirAgendamento);
+appRoutes.put("/meuAppointments/:id/cancel",jwt.verifyToken,agendar.cancelarMeuAgendamento);
 
 module.exports = appRoutes;

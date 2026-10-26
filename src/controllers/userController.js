@@ -1,22 +1,28 @@
 require("dotenv").config();
-const User  = require("../models/user");
+const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const z = require("../schemas/validacaoUser");
 const jwt = require("jsonwebtoken");
+const { where } = require("sequelize");
 
 async function register(req, res, next) {
   const validacao = z.safeParse(req.body);
   const senhaHas = await bcrypt.hash(validacao.data.password, 12);
-
+  const totalUsuarios = await User.count();
   try {
-   await User.create({
+    await User.create({
       nome: validacao.data.nome,
       email: validacao.data.email,
       password: senhaHas,
+      role: totalUsuarios === 0 ? "ADMIN" : "USER",
     });
     return res.status(201).json({ msg: "Sua conta foi criada com sucesso! " });
   } catch (error) {
     next(error);
+  }
+  const usuarioAdm = await User.findOne({ where: { id } });
+  if (usuarioAdm) {
+    await usuarioAdm.update({ role: "ADMIN" }, { where: { id } });
   }
 }
 

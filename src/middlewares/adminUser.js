@@ -1,5 +1,5 @@
 function adminUser(req, res, next) {
-    if (req.user && req.user.role === "admin") {
+    if (req.user && req.user.role === "ADMIN") {
         next();
     } else {
         res.status(403).json({ error: "Acesso negado. Apenas para administradores." });
