@@ -7,11 +7,12 @@ const jwt = require("../config/jwt");
 const profissional = require("../controllers/professionalController");
 const agendar = require("../controllers/appointmentController");
 const adminUser = require("../middlewares/adminUser");
+const rateLimit = require("../middlewares/rateLimit");
 
 
-appRoutes.post("/register", userControllers.register);
-appRoutes.post("/login", userControllers.login);
-appRoutes.get("/user", jwt.verifyToken, userControllers.userPerfil);
+appRoutes.post("/register",rateLimit ,userControllers.register);
+appRoutes.post("/login", rateLimit,userControllers.login);
+appRoutes.get("/user", jwt.verifyToken,userControllers.userPerfil);
 appRoutes.delete("/user", jwt.verifyToken, userControllers.deletePerfil);
 appRoutes.patch("/user", jwt.verifyToken, userControllers.atualizarPerfil);
 
