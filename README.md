@@ -1,174 +1,276 @@
-🔐 Autenticação
+# 📅 Agenda API
 
-[x] Criar conta
-[x] Login
-[x] Gerar JWT
-[x] Middleware de autenticação
-[x] bcrypt para senha
+API REST para gerenciamento de agendamentos, desenvolvida com Node.js, Express, Sequelize e MySQL. O projeto permite gerenciar usuários, profissionais e agendamentos, aplicando autenticação, controle de acesso e regras de negócio para organizar os horários disponíveis.
 
-👤 Usuários
+O objetivo é desenvolver uma API segura e organizada, aplicando conceitos de desenvolvimento backend, modelagem de banco de dados, relacionamentos e construção de endpoints RESTful.
 
-[x] Criar usuário
-[x] Fazer login
-[x] Visualizar perfil
-[x] Excluir conta
+## 🚀 Tecnologias
 
-👨‍💼 Profissionais
+- **Node.js** — ambiente de execução JavaScript.
+- **Express** — criação de rotas e gerenciamento das requisições HTTP.
+- **Sequelize** — ORM para interação com o banco de dados.
+- **MySQL** — banco de dados relacional.
+- **JWT (JSON Web Token)** — autenticação de usuários.
+- **bcrypt** — criptografia de senhas.
+- **Zod** — validação de dados.
+- **express-rate-limit** — limitação de requisições.
+- **dotenv** — gerenciamento de variáveis de ambiente.
+- **Postman** — testes manuais dos endpoints.
 
-[x] Cadastrar profissional
-[x] Listar profissionais
-[x] Buscar profissional por ID
-[x] Excluir profissional
+## 🎯 Funcionalidades
 
-📅 Agendamentos
-[x] Criar agendamento
-[x] Listar meus agendamentos
-[x] Buscar agendamento por ID
-[x] Cancelar agendamento
-[x] Concluir agendamento
+### 🔐 Autenticação
 
-🚨 Regras de Negócio
+- [x] Cadastro de usuários.
+- [x] Login com email e senha.
+- [x] Geração de token JWT.
+- [x] Middleware de autenticação.
+- [x] Proteção de rotas privadas.
+- [x] Criptografia de senhas com bcrypt.
 
-[x] Usuário precisa estar autenticado
-[x] Usuário só pode visualizar seus próprios agendamentos
-[x] Não permitir dois agendamentos no mesmo horário
-[ ] Não permitir agendamento em horário passado
-[ ] Não permitir agendamento em horário já ocupado
-[ ] Não permitir agendamento em consulta cancelada
-[x] Usuário só pode cancelar seus próprios agendamentos
-[x] Agendamento concluído não pode ser cancelado
-[ ] Data e horário devem ser obrigatórios
+### 👤 Usuários
 
-🔎 Consultas
- Listar profissionais
- Buscar por especialidade
- Buscar profissional por ID
- Listar horários disponíveis
- Buscar agendamentos do usuário
-🛡️ Segurança
- JWT
- bcrypt
- Rate Limit
- Middleware de autenticação
- Validação com Zod
- dotenv
-📬 Rotas
-🔐 Auth
- POST /register
- POST /login
-👤 Usuários
- GET /user
- PUT /user
- DELETE /user
-👨‍💼 Profissionais
- POST /professionals
- GET /professionals
- GET /professionals/:id
- PUT /professionals/:id
- DELETE /professionals/:id
-📅 Agendamentos
+- [x] Consultar perfil.
+- [x] Atualizar dados da conta.
+- [x] Excluir conta.
+- [x] Restringir acesso aos próprios dados.
 
- POST /appointments
- GET /appointments
- GET /appointments/:id
- PUT /appointments/:id/cancel
- PUT /appointments/:id/complete
+### 👨‍💼 Profissionais
 
-🧪 Testes
- Testar cadastro no Postman
- Testar login no Postman
- Testar JWT
- Testar criação de profissional
- Testar criação de agendamento
- Testar cancelamento
- Testar regras de negócio
- Testar erros da API
-⚙️ Configuração
+- [x] Cadastrar profissionais.
+- [x] Listar profissionais.
+- [x] Buscar profissional por ID.
+- [ ] Atualizar informações.
+- [x] Excluir profissional.
+- [x] Pesquisar profissionais por especialidade.
 
+### 📅 Agendamentos
 
-# 🔐 Autenticação
-- [x] Criar conta
-- [x] Login
-- [x] Gerar JWT
-- [x] Middleware de autenticação
-- [x] bcrypt para senha
+- [x] Criar agendamentos.
+- [x] Listar os agendamentos do usuário autenticado.
+- [x] Buscar agendamento por ID.
+- [x] Cancelar agendamentos.
+- [x] Concluir agendamentos.
+- [x] Consultar horários disponíveis.
 
-# 👤 Usuários
-- [x] Criar usuário
-- [x] Fazer login
-- [x] Visualizar perfil
-- [x] Excluir conta
+## 🧠 Regras de negócio
 
-# 👨‍💼 Profissionais
-- [x] Cadastrar profissional
-- [x] Listar profissionais
-- [x] Buscar profissional por ID
-- [x] Atualizar profissional
-- [x] Excluir profissional
+O sistema será desenvolvido com as seguintes regras:
 
-# 📅 Agendamentos
-- [x] Criar agendamento
-- [x] Listar meus agendamentos
-- [x] Buscar agendamento por ID
-- [x] Cancelar agendamento
-- [x] Concluir agendamento
+- Somente usuários autenticados poderão realizar agendamentos.
+- Cada usuário poderá consultar e gerenciar seus próprios agendamentos.
+- Um profissional não poderá ter dois agendamentos no mesmo horário.
+- Não será permitido agendar horários no passado.
+- Um agendamento deverá estar vinculado a um usuário e a um profissional.
+- Agendamentos cancelados não poderão ser tratados como agendamentos ativos.
+- Agendamentos concluídos não poderão ser cancelados.
+- O status inicial de um agendamento será `AGENDADO`.
 
-# 🚨 Regras de Negócio
-- [x] Usuário precisa estar autenticado
-- [x] Usuário só pode visualizar seus próprios agendamentos
-- [x] Não permitir dois agendamentos no mesmo horário
-- [ ] Não permitir agendamento em horário passado
-- [ ] Não permitir agendamento em horário já ocupado
-- [ ] Não permitir agendamento em consulta cancelada
-- [x] Usuário só pode cancelar seus próprios agendamentos
-- [x] Agendamento concluído não pode ser cancelado
-- [ ] Data e horário devem ser obrigatórios
+## 🗄️ Modelagem do banco de dados
 
-# 🔎 Consultas
-- [x] Listar profissionais
-- [ ] Buscar por especialidade
-- [x] Buscar profissional por ID
-- [ ] Listar horários disponíveis
-- [x] Buscar agendamentos do usuário
+### User
 
-# 🛡️ Segurança
-- [x] JWT
-- [x] bcrypt
-- [x] Rate Limit
-- [x] Middleware de autenticação
-- [x] Validação com Zod
-- [x] dotenv
+Responsável por armazenar os dados dos usuários.
 
-# 📬 Rotas
-## 🔐 Auth
-- [x] POST /register
-- [x] POST /login
+- `id`
+- `nome`
+- `email`
+- `password`
 
-## 👤 Usuários
-- [x] GET /user
-- [x] PUT /user
-- [x] DELETE /user
+### Professional
 
-## 👨‍💼 Profissionais
-- [x] POST /professionals
-- [x] GET /professionals
-- [x] GET /professionals/:id
-- [x] PUT /professionals/:id
-- [x] DELETE /professionals/:id
+Responsável por armazenar os dados dos profissionais.
 
-## 📅 Agendamentos
-- [x] POST /appointments
-- [x] GET /appointments
-- [x] GET /appointments/:id
-- [x] PUT /appointments/:id/cancel
-- [x] PUT /appointments/:id/complete
+- `id`
+- `nome`
+- `especialidade`
+- `telefone`
 
-# 🧪 Testes
-- [x] Testar cadastro no Postman
-- [x] Testar login no Postman
-- [x] Testar JWT
-- [x] Testar criação de profissional
-- [x] Testar criação de agendamento
-- [x] Testar cancelamento
-- [x] Testar regras de negócio
-- [x] Testar erros da API
+### Appointment
+
+Responsável por armazenar os dados dos agendamentos.
+
+- `id`
+- `data`
+- `horario`
+- `status`
+- `UserId`
+- `ProfessionalId`
+
+### Status dos agendamentos
+
+| Status      | Descrição                   |
+| ----------- | --------------------------- |
+| `AGENDADO`  | Agendamento criado e ativo. |
+| `CONCLUIDO` | Atendimento concluído.      |
+| `CANCELADO` | Agendamento cancelado.      |
+
+### Relacionamentos
+
+- Um usuário pode possuir vários agendamentos.
+- Um profissional pode possuir vários agendamentos.
+- Cada agendamento pertence a um usuário.
+- Cada agendamento pertence a um profissional.
+
+## 🏗️ Estrutura do projeto
+
+```text
+src/
+├── app/
+│   └── server.js
+├── config/
+│   └── database.js
+├── controllers/
+│   ├── userController.js
+│   ├── professionalController.js
+│   └── appointmentController.js
+├── middlewares/
+│   ├── authMiddleware.js
+│   ├── validationMiddleware.js
+│   └── rateLimit.js
+├── models/
+│   ├── User.js
+│   ├── Professional.js
+│   └── Appointment.js
+└── routes/
+    └── routes.js
+```
+
+A aplicação segue o padrão **MVC**, separando as responsabilidades entre models, controllers e routes, facilitando a manutenção e a evolução do código.
+
+## 🔗 Endpoints planejados
+
+### Autenticação
+
+| Método | Rota        | Descrição          |
+| ------ | ----------- | ------------------ |
+| POST   | `/register` | Cadastrar usuário  |
+| POST   | `/login`    | Autenticar usuário |
+
+### Usuários
+
+| Método | Rota    | Descrição        |
+| ------ | ------- | ---------------- |
+| GET    | `/user` | Consultar perfil |
+| PUT    | `/user` | Atualizar conta  |
+| DELETE | `/user` | Excluir conta    |
+
+### Profissionais
+
+| Método | Rota                 | Descrição              |
+| ------ | -------------------- | ---------------------- |
+| POST   | `/professionals`     | Cadastrar profissional |
+| GET    | `/professionals`     | Listar profissionais   |
+| GET    | `/professionals/:id` | Buscar profissional    |
+| PUT    | `/professionals/:id` | Atualizar profissional |
+| DELETE | `/professionals/:id` | Excluir profissional   |
+
+### Agendamentos
+
+| Método | Rota                         | Descrição                      |
+| ------ | ---------------------------- | ------------------------------ |
+| POST   | `/appointments`              | Criar agendamento              |
+| GET    | `/appointments`              | Listar meus agendamentos       |
+| GET    | `/appointments/:id`          | Buscar agendamento             |
+| PUT    | `/appointments/:id/cancel`   | Cancelar agendamento           |
+| PUT    | `/appointments/:id/complete` | Concluir agendamento           |
+| GET    | `/appointments/available`    | Consultar horários disponíveis |
+
+*Os endpoints acima representam o planejamento da API e poderão ser ajustados durante o desenvolvimento.*
+
+## ⚙️ Como executar o projeto
+
+### 1. Clone o repositório
+
+```bash
+git clone URL_DO_SEU_REPOSITORIO
+```
+
+### 2. Entre na pasta do projeto
+
+```bash
+cd agenda-api
+```
+
+### 3. Instale as dependências
+
+```bash
+npm install
+```
+
+### 4. Configure as variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+PORT=3333
+
+DB_NAME=agenda_api
+DB_USER=root
+DB_PASSWORD=sua_senha
+DB_HOST=localhost
+DB_PORT=3306
+DB_DIALECT=mysql
+
+SECRET=sua_chave_jwt
+```
+
+### 5. Crie o banco de dados
+
+No MySQL, execute:
+
+```sql
+CREATE DATABASE agenda_api;
+```
+
+### 6. Inicie a aplicação
+
+```bash
+npm run dev
+```
+
+A aplicação ficará disponível na porta configurada, desde que o script `dev`, a conexão com o banco e as demais configurações estejam definidos corretamente.
+
+## 🧪 Testes
+
+Os endpoints serão testados manualmente utilizando o Postman, verificando:
+
+- [x] Cadastro e login.
+- [x] Autenticação com JWT.
+- [x] Validação dos dados enviados.
+- [x] Operações de cadastro, consulta, atualização e exclusão.
+- [x] Criação e cancelamento de agendamentos.
+- [ ] Bloqueio de horários já ocupados.
+- [x] Controle de acesso aos agendamentos.
+- [x] Tratamento de erros e respostas HTTP.
+
+## 🔒 Segurança
+
+- Senhas armazenadas com hash utilizando bcrypt.
+- Rotas privadas protegidas por JWT.
+- Validação dos dados de entrada.
+- Limitação de requisições em endpoints sensíveis.
+- Variáveis sensíveis armazenadas em `.env`.
+- Controle de acesso aos dados dos usuários.
+
+## 📈 Melhorias futuras
+
+- [ ] Paginação de resultados.
+- [ ] Filtros por data e especialidade.
+- [ ] Definição de horários de atendimento dos profissionais.
+- [ ] Documentação da API com Swagger.
+- [ ] Testes automatizados.
+- [ ] Docker.
+- [ ] Deploy em ambiente de produção.
+
+## 👨‍💻 Objetivo do projeto
+
+Este projeto faz parte da minha evolução como desenvolvedor backend, com foco na construção de APIs REST, autenticação, modelagem relacional, validação de dados, regras de negócio e boas práticas de organização de código.
+
+O desenvolvimento busca consolidar conhecimentos em JavaScript, Node.js, Express, Sequelize e MySQL por meio de uma aplicação prática.
+
+---
+
+**Desenvolvido por [ Jean Lucas ]**
+
+[GitHub](URL_DO_SEU_GITHUB)
