@@ -3,7 +3,6 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const z = require("../schemas/validacaoUser");
 const jwt = require("jsonwebtoken");
-const { where } = require("sequelize");
 
 async function register(req, res, next) {
   const validacao = z.safeParse(req.body);
@@ -82,4 +81,38 @@ async function deletePerfil(req, res, next) {
   }
 }
 
-module.exports = { register, login, userPerfil, deletePerfil };
+
+async function atualizarPerfil(req, res, next) {
+  try {
+    const validacao = z.safeParse(req.body);
+
+    if (!validacao.success) {
+      return res.status(400).json({msg: "Dados inválidos!",erros: validacao.error.issues
+      });
+    }
+
+    const user = await User.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({msg: "Usuário não encontrado!"});
+    }
+
+    const senhaHas = await bcrypt.hash(validacao.data.password,12);
+
+    await user.update({
+      nome:validacao.data.nome,
+      email:validacao.data.email,
+      password: senhaHas
+    });
+
+    return res.status(200).json({
+      msg: "Você atualizou seu perfil com sucesso!"
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+module.exports = { register, login, userPerfil, deletePerfil, atualizarPerfil };

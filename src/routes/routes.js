@@ -13,6 +13,7 @@ appRoutes.post("/register", userControllers.register);
 appRoutes.post("/login", userControllers.login);
 appRoutes.get("/user", jwt.verifyToken, userControllers.userPerfil);
 appRoutes.delete("/user", jwt.verifyToken, userControllers.deletePerfil);
+appRoutes.patch("/user", jwt.verifyToken, userControllers.atualizarPerfil);
 
 
 appRoutes.post("/professionals",jwt.verifyToken,adminUser,profissional.criarProfissional);
